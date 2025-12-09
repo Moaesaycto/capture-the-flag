@@ -15,11 +15,11 @@ const isStandalone = (): boolean => {
 
 // Check if push notifications are supported on this browser
 const isPushSupported = (): boolean => {
-    console.log('feature detection:', {
+    /* console.log('feature detection:', {
         serviceWorker: 'serviceWorker' in navigator,
         pushManager: 'PushManager' in window,
         notification: 'Notification' in window,
-    });
+    }); */
 
     // Basic feature detection - if these exist, the browser supports push
     if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
@@ -66,33 +66,34 @@ export function usePushNotifications() {
     const [isSupported, setIsSupported] = useState(true);
 
     useEffect(() => {
-        console.log('=== Push Support Check ===');
+        /* console.log('=== Push Support Check ===');
         console.log('ServiceWorker:', 'serviceWorker' in navigator);
         console.log('PushManager:', 'PushManager' in window);
         console.log('Standalone:', 'standalone' in navigator ? (navigator as any).standalone : 'N/A');
         console.log('Display Mode:', window.matchMedia('(display-mode: standalone)').matches ? 'standalone' : 'browser');
-        console.log('User Agent:', navigator.userAgent);
+        console.log('User Agent:', navigator.userAgent); */
 
         const supported = isPushSupported();
-        console.log('isPushSupported result:', supported);
+        // console.log('isPushSupported result:', supported);
 
         if (!supported) {
-            console.log('Push not supported on this browser');
+            // console.log('Push not supported on this browser');
             setIsSupported(false);
             return;
         }
 
-        console.log('Push is supported, registering service worker...');
+        // console.log('Push is supported, registering service worker...');
         const swPath = `${import.meta.env.BASE_URL}service-worker.js`;
 
         navigator.serviceWorker.register(swPath)
             .then(reg => {
-                console.log('Service worker registered successfully');
+                // console.log('Service worker registered successfully');
                 return reg.update();
             })
             .then(() => restoreSubscription())
             .catch(err => {
-                console.error('Service worker registration failed:', err.message);
+                // console.error('Service worker registration failed:', err.message);
+                void err;
                 setIsSupported(false);
             });
     }, []);
@@ -115,7 +116,7 @@ export function usePushNotifications() {
             return;
         }
 
-        console.log('Subscribe called, isSupported:', isSupported);
+        // console.log('Subscribe called, isSupported:', isSupported);
 
         if (!isSupported) {
             const ua = navigator.userAgent.toLowerCase();
@@ -133,17 +134,17 @@ export function usePushNotifications() {
 
         try {
             // Request notification permission
-            console.log('Checking Notification API...');
+            /* console.log('Checking Notification API...');
             console.log('Notification in window:', 'Notification' in window);
-            console.log('requestPermission type:', typeof (window as any).Notification?.requestPermission);
+            console.log('requestPermission type:', typeof (window as any).Notification?.requestPermission); */
 
             if (!isNotificationAPIAvailable()) {
                 throw new Error('Notification API not available on this browser');
             }
 
-            console.log('Requesting permission...');
+            // console.log('Requesting permission...');
             const permission = await Notification.requestPermission();
-            console.log('Permission result:', permission);
+            // console.log('Permission result:', permission);
 
             if (permission !== 'granted') {
                 alert('Notification permission was denied. Please enable it in your browser settings.');

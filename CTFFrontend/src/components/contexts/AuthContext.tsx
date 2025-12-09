@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     };
 
     const logout = useCallback(async () => {
-        console.log("Logout started");
+        // console.log("Logout started");
 
         if (subscription) {
             try {
@@ -48,18 +48,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                     unsubscribe(),
                     new Promise((resolve) => setTimeout(resolve, 5000))
                 ]);
-                console.log("Unsubscribed successfully");
+                // console.log("Unsubscribed successfully");
             } catch (error) {
-                console.error("Unsubscribe failed, continuing logout:", error);
+                // console.error("Unsubscribe failed, continuing logout:", error);
             }
         }
 
-        console.log("Clearing state");
+        // console.log("Clearing state");
         localStorage.removeItem(JWT_KEY);
         setJwt(null);
         setMe(null);
         setMyTeam(null);
-        console.log("Logout completed, redirecting...");
+        // console.log("Logout completed, redirecting...");
 
         window.location.href = '/capture-the-flag';
     }, [unsubscribe]);

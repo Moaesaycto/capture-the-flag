@@ -55,8 +55,8 @@ export async function unsubscribeUser() {
         const subscription = await registration.pushManager.getSubscription();
         if (subscription) {
 
-            const unsubscribed = await subscription.unsubscribe();
-            console.log('Local unsubscribe:', unsubscribed);
+            // const unsubscribed = await subscription.unsubscribe();
+            // console.log('Local unsubscribe:', unsubscribed);
 
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 5000);

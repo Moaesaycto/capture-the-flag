@@ -6,13 +6,19 @@ import MainFooter from './components/main/MainFooter'
 import MessagesPage from './pages/MessagesPage'
 import SettingsPage from './pages/SettingsPage'
 import { useAuthContext } from './components/contexts/AuthContext'
-import { type JSX } from 'react'
+import { useEffect, type JSX } from 'react'
 import RulesPage from './pages/RulesPage'
 import FlagRegistrationPage from './pages/FlagRegistrationPage'
 
 function App() {
-  console.log("Capture the flag");
-  
+  useEffect(() => {
+    const navEntries = performance.getEntriesByType("navigation");
+    if ((navEntries[0] as any)?.type  === "navigate") {
+      window.location.reload();
+    }
+  }, []);
+
+
   return (
     <div className="flex flex-col min-h-screen w-full items-center bg-neutral-950">
       <MainHeader />

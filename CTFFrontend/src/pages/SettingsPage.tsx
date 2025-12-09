@@ -144,7 +144,7 @@ const SettingsPage = () => {
                 <Option title="Show New Message Badge" onChange={(e) => setWantsNewMessageBadges(e)} value={wantsNewMessageBadges} disabled={!me} />
             </SettingsSection>
             {me && me.auth && <SettingsSection title="Moderator Options" icon={RiAdminFill} >
-                <Option title="Full Reset Game" onClick={() => { gameReset(true, jwt!); logout(); }} type="button" icon={FaTrash} color="#ff7a7a" />
+                <Option title="Full Reset Game" onClick={() => { gameReset(true, jwt!).then(logout); }} type="button" icon={FaTrash} color="#ff7a7a" />
             </SettingsSection>}
             {debugInfo && <div className="bg-yellow-900 text-yellow-100 p-4 mb-4 rounded text-xs">
                 <p>Debug Info:</p>
