@@ -20,7 +20,7 @@ function App() {
 
 
   return (
-    <div className="flex flex-col min-h-screen w-full items-center bg-neutral-950">
+    <div className="flex flex-col min-h-screen w-full items-center bg-neutral-900">
       <MainHeader />
       <main className="flex flex-1 min-h-0 w-full bg-neutral-900 max-w-6xl">
         <Routes>
