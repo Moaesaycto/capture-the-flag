@@ -72,3 +72,6 @@ ehthumbs.db
 
 # My stuff
 /temp
+.env
+/.env
+*/.env
