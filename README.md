@@ -8,7 +8,7 @@
 
 ## **Demo Video**
 
-https://github.com/Moaesaycto/capture-the-flag/releases/download/DemoVideo/CTF.Demo.mp4
+https://github.com/user-attachments/assets/8b748c2c-c61c-4f3f-ae00-64045370366b
 
 ## **Features**
 
