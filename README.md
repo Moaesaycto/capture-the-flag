@@ -81,10 +81,10 @@ The above block of code requires a little more work. You can generate your VAPID
 As for the keystore file, you will need to generate that yourself. The command you should use will look something like this:
 
 ```bash
-keytool -list -v -keystore CTFBackend\certs\ctf-local.p12 -storepass <The value of your SSL_KEYSTORE_PASSWORD>
+keytool -genkeypair -alias api.moae.dev -keyalg RSA -keysize 2048 -storetype PKCS12 -keystore CTFBackend\src\main\resources\certs\ctf-local.p12 -storepass <password> -validity 365
 ```
 
-Follow what it says, and you should end up with a `.p12` file in `CTFBackend\src\main\resources\certs`. (You may need to install a tool like OpenSSL to get this working). Make sure the file is called `ctf-local.p12`, or just change it to match in the `.env` file.
+Follow what it says, and you should end up with a `.p12` file in `CTFBackend\src\main\resources\certs`. Make sure the file is called `ctf-local.p12`, or just change it to match in the `.env` file.
 
 ### Running
 
