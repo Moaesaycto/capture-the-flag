@@ -9,7 +9,6 @@ import moae.dev.Sockets.AnnouncementSocketConnectionHandler;
 import moae.dev.Sockets.SocketConnectionHandler;
 import moae.dev.Sockets.StateSocketConnectionHandler;
 import moae.dev.Utils.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -22,6 +21,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Game {
   private final AppConfig config;
+    private final PushNotificationService pushService;
 
   private final List<Team> teams;
   private final List<Player> players;
@@ -29,7 +29,6 @@ public class Game {
   private final AtomicInteger counter = new AtomicInteger(0);
   private final List<ChatMessage> messages = new ArrayList<>();
 
-  @Autowired private PushNotificationService pushService;
   private SocketConnectionHandler webSocketHandler;
 
   private static final long REWIND_TOLERANCE_MS = 5000;
@@ -71,7 +70,8 @@ public class Game {
     }
   }
 
-  public Game(AppConfig initConfig) {
+  public Game(AppConfig initConfig, PushNotificationService pushService) {
+    this.pushService = pushService;
     teams = new ArrayList<Team>();
     players = new ArrayList<Player>();
     state = State.WAITING_TO_START;

@@ -126,6 +126,7 @@ public class GameController {
       @RequestBody ResetRequest req, @AuthenticationPrincipal Jwt jwt) {
     if (game.emergencyDeclared())
       throw new ResponseStatusException(HttpStatus.LOCKED, "Game in emergency state");
+    System.out.println(req.isHard() ? "RESET HARD" : "reset soft");
     game.reset(req.isHard());
     return Map.of("message", "success");
   }

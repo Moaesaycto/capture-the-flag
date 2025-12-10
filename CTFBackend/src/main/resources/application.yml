@@ -11,10 +11,14 @@ server:
 logging:
   level:
     root: INFO
-    org.springframework.security: DEBUG
+    # org.springframework.security: DEBUG
+    org.springframework: ERROR
+    org.hibernate: ERROR
 spring:
   config:
     import: classpath:config.yml
+  security:
+    debug: false
 app:
   jwt:
     secret: "12345678901234567890123456789012"

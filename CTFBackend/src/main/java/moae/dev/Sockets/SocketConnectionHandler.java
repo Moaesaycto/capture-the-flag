@@ -34,7 +34,7 @@ public class SocketConnectionHandler extends TextWebSocketHandler {
   @Override
   public void afterConnectionEstablished(@NonNull WebSocketSession session) throws Exception {
     super.afterConnectionEstablished(session);
-    System.out.println(session.getId() + " Connected to " + session.getUri());
+    // System.out.println(session.getId() + " Connected to " + session.getUri());
     webSocketSessions.add(session);
   }
 
@@ -42,7 +42,7 @@ public class SocketConnectionHandler extends TextWebSocketHandler {
   public void afterConnectionClosed(@NonNull WebSocketSession session, @NonNull CloseStatus status)
       throws Exception {
     super.afterConnectionClosed(session, status);
-    System.out.println(session.getId() + " Disconnected from " + session.getUri());
+    // System.out.println(session.getId() + " Disconnected from " + session.getUri());
     webSocketSessions.remove(session);
   }
 

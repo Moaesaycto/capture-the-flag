@@ -9,7 +9,6 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.lang.NonNull;
 
 import java.io.IOException;
-import java.util.Map;
 
 public class StateSocketConnectionHandler extends SocketConnectionHandler {
   private static StateSocketConnectionHandler instance;
