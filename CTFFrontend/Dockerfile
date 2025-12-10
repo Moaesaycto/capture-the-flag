@@ -1,0 +1,27 @@
+FROM node:20-bullseye-slim AS build
+WORKDIR /app
+
+COPY package*.json ./
+COPY . .
+
+ARG VITE_BACKEND_URL
+ARG VITE_BACKEND_SOCKET_URL
+ARG VITE_MAX_MESSAGE_LENGTH
+ARG VITE_APPLICATION_SERVER_KEY
+ARG VITE_JWT_KEY
+
+ENV VITE_BACKEND_URL=$VITE_BACKEND_URL
+ENV VITE_BACKEND_SOCKET_URL=$VITE_BACKEND_SOCKET_URL
+ENV VITE_MAX_MESSAGE_LENGTH=$VITE_MAX_MESSAGE_LENGTH
+ENV VITE_APPLICATION_SERVER_KEY=$VITE_APPLICATION_SERVER_KEY
+ENV VITE_JWT_KEY=$VITE_JWT_KEY
+
+RUN npm ci
+RUN npm run build
+
+FROM nginx:stable-alpine AS final
+COPY --from=build /app/dist /usr/share/nginx/html/capture-the-flag
+COPY --from=build /app/dist /usr/share/nginx/html
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]

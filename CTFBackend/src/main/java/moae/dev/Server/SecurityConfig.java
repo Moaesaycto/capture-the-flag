@@ -63,10 +63,25 @@ public class SecurityConfig {
   @Bean
   CorsConfigurationSource corsConfigurationSource(AppSecurityProperties securityProperties) {
     CorsConfiguration config = new CorsConfiguration();
+    
+    // Only allow your specific frontend - SECURE for production
     config.setAllowedOrigins(List.of(securityProperties.getFrontend()));
+    
+    // Allow common HTTP methods
     config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-    config.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+    
+    // Allow all headers - this is safe because origin is restricted
+    // Browsers send various headers (like sec-fetch-*) that need to be allowed
+    config.setAllowedHeaders(List.of("*"));
+    
+    // Expose these headers to the frontend JavaScript
+    config.setExposedHeaders(List.of("Authorization", "Content-Type"));
+    
+    // Allow credentials (cookies, authorization headers)
     config.setAllowCredentials(true);
+    
+    // Cache preflight requests for 1 hour to reduce overhead
+    config.setMaxAge(3600L);
 
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
     source.registerCorsConfiguration("/**", config);

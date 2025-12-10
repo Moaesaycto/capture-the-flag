@@ -1,27 +1,27 @@
 server:
   port: 8443
   ssl:
-    enabled: false
-    key-store: classpath:certs/ctf-local.p12
-    key-store-password: oopygoopy
+    enabled: ${SSL_ENABLED:true}
+    key-store: ${SSL_KEYSTORE:classpath:certs/ctf-local.p12}
+    key-store-password: ${SSL_KEYSTORE_PASSWORD:}
     key-store-type: PKCS12
-    key-alias: ctf-local
+    key-alias: ${SSL_KEY_ALIAS:ctf-local}
   error:
-    include-message: always
+    include-message: ${ERROR_MESSAGES:never}
 logging:
   level:
     root: INFO
-    # org.springframework.security: DEBUG
+    org.springframework.security: DEBUG
     org.springframework: ERROR
     org.hibernate: ERROR
 spring:
   config:
     import: classpath:config.yml
   security:
-    debug: false
+    debug: ${SPRING_SECURITY_DEBUG:false}
 app:
   jwt:
-    secret: "12345678901234567890123456789012"
+    secret: ${JWT_SECRET:}
     expiry-minutes: 720 # 12 hours, should be enough
   security:
     public-paths:
@@ -33,9 +33,9 @@ app:
       - /player/join
       - /team/info/*
       - /api/push/**
-    auth-pw: "oopygoopy"
-    frontend: http://localhost:5173
+    auth-pw: ${APP_AUTH_PASSWORD:}
+    frontend: ${FRONTEND_URL:https://localhost:5173}
 vapid:
-  publicKey: BPBB7YTMuhbUbFEZZNXeNeTpw_lD3dobyzOiE7HUO7POfrMlEM-kztNoAnD2473B732jlD4agryajdOMKnRUiz8
-  privateKey: 6OPI6pyL1dNgZSYpq2YgGfNbQFqS3_oQu1orG2a0OIg
-  subject: mailto:moaesaycto@gmail.com
+  publicKey: ${VAPID_PUBLIC_KEY:}
+  privateKey: ${VAPID_PRIVATE_KEY:}
+  subject: ${VAPID_SUBJECT:mailto:example@mail.com}

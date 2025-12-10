@@ -1,21 +1,54 @@
+version: "3.8"
+
 services:
   backend:
+    env_file:
+    - .env
     build:
       context: ./CTFBackend
       dockerfile: Dockerfile
+      args:
+        KEYSTORE_PASS: ${CTF_KEYSTORE_PASSWORD}
     container_name: ctf_backend
-    ports:
-      - "8080:8080"
-    volumes: 
-      - ./backend/src/main/resources/application.yml:/app/config/application.yml
-      - ./backend/src/main/resources/config.yml:/app/config/config.yml
     environment:
-      - SPRING_PROFILE_ACTIVE=prod
-      - SPRING_CONFIG_LOCATION=file:/app/config/
+      SPRING_PROFILES_ACTIVE: prod
+      SSL_KEYSTORE_PASSWORD: ${CTF_KEYSTORE_PASSWORD}
+      SERVER_SSL_KEY_STORE_PASSWORD: ${CTF_KEYSTORE_PASSWORD}
+      SERVER_SSL_ENABLED: ${SSL_ENABLED}
+      SERVER_SSL_KEY_STORE: ${SSL_KEYSTORE}
+      SERVER_SSL_KEY_ALIAS: ${SSL_KEY_ALIAS}
+      JWT_SECRET: ${JWT_SECRET}
+      APP_AUTH_PASSWORD: ${APP_AUTH_PASSWORD}
+    ports:
+      - "8443:8443"
+      - "8080:8080"
+    volumes:
+      - ./CTFBackend/src/main/resources/application.yml:/app/config/application.yml:ro
+      - ./CTFBackend/src/main/resources/config.yml:/app/config/config.yml:ro
     networks:
       - ctf_network
+    restart: unless-stopped
+  frontend:
+    env_file:
+    - .env
+    build:
+      context: ./CTFFrontend
+      dockerfile: Dockerfile
+      args:
+        VITE_BACKEND_URL: ${VITE_BACKEND_URL}
+        VITE_BACKEND_SOCKET_URL: ${VITE_BACKEND_SOCKET_URL}
+        VITE_MAX_MESSAGE_LENGTH: ${VITE_MAX_MESSAGE_LENGTH}
+        VITE_APPLICATION_SERVER_KEY: ${APPLICATION_SERVER_KEY}
+        VITE_JWT_KEY: ${VITE_JWT_KEY}  # public only
+    container_name: ctf_frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    networks:
+      - ctf_network
+    restart: unless-stopped
 
 networks:
   ctf_network:
-    name: ctf_network
     driver: bridge
