@@ -95,3 +95,26 @@ docker-compose up --build
 ```
 
 Access it via the frontend URL you provided in the `.env` file.
+
+### Updating the Game Settings
+
+If you want to change the settings for the game, such as the duration of each period and the teams, you can find the information in `CTFBackend/src/main/resources/config.yml`. You can change the information there if you would like:
+
+```yml
+game:
+  maxPlayers: -1
+  minPlayers: 2
+  minPlayersPerTeam: 1
+  maxPlayersPerTeam: -1
+  maxTeams: 2
+  graceTime: 5 # 600 # 10 minutes
+  scoutTime: 5 # 1800 # 30 minutes
+  ffaTime: 5 # 1200 # 20 minutes
+teams:
+  - name: Yellow
+    color: "#e1ff00"
+  - name: Orange
+    color: "#ff8300"
+  - name: Pink
+    color: "#ff00ee"
+```
