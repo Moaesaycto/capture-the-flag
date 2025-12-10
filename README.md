@@ -6,6 +6,10 @@
 
 **Capture the Flag** is a common game played in many fields, including computer science, sports and even military training. This platform has been designed for use as a physical game of Capture the Flag in Sydney, and contains a range of features that make the game run smoothly for players and moderators.
 
+## **Demo Video**
+
+https://github.com/Moaesaycto/capture-the-flag/releases/download/DemoVideo/CTF.Demo.mp4
+
 ## **Features**
 
 * **Live Updates:** The game states are broadcasted live as they happen through WebSockets. If the game is paused, there is an emergency, the game ends, or any major event happens, all players will immediately be notified (with optional push notifications).
