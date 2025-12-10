@@ -8,14 +8,15 @@ import clsx from "clsx";
 type PageProps = {
     children?: ReactNode;
     padding?: boolean;
+    isStatic? : boolean;
 }
 
-const Page = ({ children, padding = true }: PageProps) => {
+const Page = ({ children, padding = true, isStatic = false }: PageProps) => {
     const { authLoading, healthy } = useAuthContext();
     const { loading, health } = useGameContext();
 
-    if (authLoading || (loading && !health)) return <Loading />;
-    if (!healthy) return <NoConnection />;
+    if (!isStatic && (authLoading || (loading && !health))) return <Loading />;
+    if (!isStatic && !healthy) return <NoConnection />;
 
     return (
         <div

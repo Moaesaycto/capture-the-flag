@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const RulesPage = () => {
     return (
-        <Page>
+        <Page isStatic>
             <div className="flex flex-col gap-4">
                 <div className="flex flex-row justify-between">
                     <h2
